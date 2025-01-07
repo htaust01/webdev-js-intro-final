@@ -8,7 +8,7 @@ const computerGuess = document.getElementById("computer-guess");
 const guessHistory = document.getElementById("guess-history");
 const submitBtn = document.getElementById("submit-btn");
 const restartBtn = document.getElementById("restart-btn");
-const introMessage = document.getElementsByClassName("game-message")[0]; // first element with this class name
+const introMessage = document.querySelector(".game-message"); // first element with this class name
 
 // Create variables
 let prevGuesses = []; // Array containing previous guesses
@@ -19,6 +19,7 @@ console.log(number) // log number to console to help with testing
 const makeGuess = () => {
   const guess = parseInt(guessInputElement.value);
   prevGuesses.push(guess);
+  guessInputElement.value = "Enter Number";
 
   // get conditions
   const gameWon = guess === number;
@@ -36,7 +37,7 @@ const makeGuess = () => {
   guessHistory.innerText = prevGuesses.join(", ");
   computerGuess.innerText = gameOver ? number : "???"; // Only populate with number when gameOver
   introMessage.innerText = gameOver ? "Click Restart to play again!" :
-                                      `Try to guess the computer's number within ${3 - prevGuesses.length} tries!`;
+                                      `Try to guess the computer's number within ${3 - prevGuesses.length} ${(prevGuesses.length === 2 ? "try" : "tries")}!`;
 
   if (gameOver) { // disable submit btn and enable restart btn
     submitBtn.disabled = true;
@@ -59,7 +60,6 @@ const restartGame = () => {
   currentGuess.innerText = "";
   computerGuess.innerText = "";
   guessHistory.innerText = "";
-  guessInputElement.value = "Enter Number";
   introMessage.innerText = "Try to guess the computer's number within 3 tries!"
 };
 
