@@ -19,7 +19,7 @@ console.log(number) // log number to console to help with testing
 const makeGuess = () => {
   const guess = parseInt(guessInputElement.value);
   prevGuesses.push(guess);
-  guessInputElement.value = "Enter Number";
+  guessInputElement.value = "Enter Number"; // restore placeholder text
 
   // get conditions
   const gameWon = guess === number;
@@ -28,12 +28,16 @@ const makeGuess = () => {
 
   // create message for result
   let message;
-  if(gameOver) message = gameWon ? "You WIN!!!" : "You LOSE :(";
+  if(guess > 10 || guess < 1) {
+    message = "Nope. Guess a number between 1 and 10";
+    prevGuesses.pop();
+  }
+  else if(gameOver) message = gameWon ? "You WIN!!!" : "You LOSE :(";
   else message = "That is incorrect. Try " + (numIsHigher ? "higher" : "lower");
 
   // update elements
   guessMessage.innerText = message;
-  currentGuess.innerText = prevGuesses[prevGuesses.length - 1];
+  currentGuess.innerText = prevGuesses.length === 0 ? "" : prevGuesses[prevGuesses.length - 1];
   guessHistory.innerText = prevGuesses.join(", ");
   computerGuess.innerText = gameOver ? number : "???"; // Only populate with number when gameOver
   introMessage.innerText = gameOver ? "Click Restart to play again!" :
